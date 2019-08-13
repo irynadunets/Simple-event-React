@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/react/umd/react.production.min.js" crossorigin />
+  <script src="https://unpkg.com/react-dom/umd/react-dom.production.min.js" crossorigin  />
+  <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossorigin  />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous"
+/>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+    class FirePlace extends React.Component {
+    constructor(props) {
+      super(props);
+      this.onSetFire = this.onSetFire.bind(this);
+      this.onSnuffOut = this.onSnuffOut.bind(this);
+      this.state = {isBurning: false};
+    }
+
+    onSetFire() {
+      this.setState({isBurning: true});
+    }
+
+    onSnuffOut() {
+      this.setState({isBurning: false});
+    }
+
+    render() {
+      const isBurning = this.state.isBurning;
+
+      let button = null;
+      if(isBurning){
+        button = <SnuffOutButton onClick={this.onSnuffOut} />
+      } else {
+        button = <SetFireButton onClick={this.onSetFire} />
+      }
+      return (
+        <div>
+          <Indicator isBurning={isBurning} />
+          {button}
+        </div>
+      );
+    }
+  }
+
+  function SetFireMessage(props) {
+    return <h3>Fire</h3>;
+  }
+
+  function SnuffOutMessage(props) {
+    return <h3>Dont fire</h3>;
+  }
+
+  function Indicator(props) {
+    const isBurning = props.isBurning;
+    if(isBurning){
+      return <SetFireMessage />;
+    }
+    return <SnuffOutMessage />;
+  }
+
+  function SetFireButton(props) {
+    return (<button variant="danger" onClick={props.onClick}>Onn</button>);
+  }
+
+  function SnuffOutButton(props) {
+    return (<button variant="secondary" onClick={props.onClick}>Off</button>);
+  }
+
+  ReactDOM.render(<FirePlace />,  document.getElementById('root'));
+
+    </script>
+  </body>
+</html>
